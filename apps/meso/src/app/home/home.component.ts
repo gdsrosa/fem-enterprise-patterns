@@ -59,25 +59,6 @@ const appState: AppState = {
   projectsState: initialProjectsState,
 };
 
-class ProjectsStore {
-  state: ProjectsState;
-
-  constructor(state: ProjectsState) {
-    this.state = state;
-  }
-
-  getState() {
-    return this.state;
-  }
-
-  select(key: string) {
-    return this.state[key];
-  }
-}
-
-const projectsStore = new ProjectsStore(initialProjectsState);
-const projectsState = projectsStore.select('projects');
-
 const CREATE_PROJECT = '[Project] Create';
 const READ_PROJECT = '[Project] Read';
 const UPDATE_PROJECT = '[Project] Update';
@@ -153,7 +134,43 @@ const reducer = (
   }
 };
 
-const tango = projectsState;
+class ProjectsStore {
+  state: ProjectsState;
+  reducer: (state: ProjectsState, action: Action) => ProjectsState;
+
+  constructor(state: ProjectsState, reducer) {
+    this.state = state;
+    this.reducer = reducer;
+  }
+
+  dispatch(action: Action) {
+    this.state = this.reducer(this.state, action);
+  }
+
+  getState() {
+    return this.state;
+  }
+
+  select(key: string) {
+    return this.state[key];
+  }
+}
+
+const projectsStore = new ProjectsStore(initialProjectsState, reducer);
+const projectsState = projectsStore.select('currentProject');
+
+const myProject: Project = {
+  id: '123',
+  name: 'Redux',
+  version: '1.2.3',
+};
+
+projectsStore.dispatch({ type: CREATE_PROJECT, payload: myProject });
+
+// const allProjects = projectsStore.select('projects');
+const allProjects = projectsStore.getState();
+
+const tango = allProjects;
 
 @Component({
   selector: 'fem-home',
