@@ -84,29 +84,53 @@ const UPDATE_PROJECT = '[Project] Update';
 const DELETE_PROJECT = '[Project] Delete';
 const LOAD_PROJECT = '[Project] Load';
 
-const createProject = (state: ProjectsState, project) => {
-  console.log(`CREATE PROJECT`, project);
-  return state;
+const createProject = (
+  state: ProjectsState,
+  project: Project
+): ProjectsState => {
+  return {
+    projects: [...state.projects, project],
+    currentProject: project,
+  };
 };
 
-const readProject = (state: ProjectsState, project) => {
-  console.log(`READ PROJECT`, project);
-  return state;
+const readProject = (state: ProjectsState, project: Project): ProjectsState => {
+  return {
+    projects: state.projects,
+    currentProject: project,
+  };
 };
 
-const updateProject = (state: ProjectsState, project) => {
-  console.log(`UPDATE PROJECT`, project);
-  return state;
+const updateProject = (
+  state: ProjectsState,
+  project: Project
+): ProjectsState => {
+  return {
+    projects: state.projects.map((p) => {
+      return p.id === project.id ? { ...p } : project;
+    }),
+    currentProject: state.currentProject,
+  };
 };
 
-const deleteProject = (state: ProjectsState, project) => {
-  console.log(`DELETE PROJECT`, project);
-  return state;
+const deleteProject = (
+  state: ProjectsState,
+  project: Project
+): ProjectsState => {
+  return {
+    projects: state.projects.filter((p) => p.id !== project.id),
+    currentProject: state.currentProject,
+  };
 };
 
-const loadProjects = (state: ProjectsState, projects) => {
-  console.log(`LOAD PROJECT`, projects);
-  return state;
+const loadProjects = (
+  state: ProjectsState,
+  projects: Project[]
+): ProjectsState => {
+  return {
+    projects,
+    currentProject: state.currentProject,
+  };
 };
 
 const reducer = (
