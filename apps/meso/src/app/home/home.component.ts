@@ -5,6 +5,7 @@ import {
   ClientState,
   Project,
   ProjectsState,
+  Action,
 } from '../../types';
 
 const johnDoe: Client = {
@@ -76,6 +77,57 @@ class ProjectsStore {
 
 const projectsStore = new ProjectsStore(initialProjectsState);
 const projectsState = projectsStore.select('projects');
+
+const CREATE_PROJECT = '[Project] Create';
+const READ_PROJECT = '[Project] Read';
+const UPDATE_PROJECT = '[Project] Update';
+const DELETE_PROJECT = '[Project] Delete';
+const LOAD_PROJECT = '[Project] Load';
+
+const createProject = (state: ProjectsState, project) => {
+  console.log(`CREATE PROJECT`, project);
+  return state;
+};
+
+const readProject = (state: ProjectsState, project) => {
+  console.log(`READ PROJECT`, project);
+  return state;
+};
+
+const updateProject = (state: ProjectsState, project) => {
+  console.log(`UPDATE PROJECT`, project);
+  return state;
+};
+
+const deleteProject = (state: ProjectsState, project) => {
+  console.log(`DELETE PROJECT`, project);
+  return state;
+};
+
+const loadProjects = (state: ProjectsState, projects) => {
+  console.log(`LOAD PROJECT`, projects);
+  return state;
+};
+
+const reducer = (
+  state: ProjectsState = initialProjectsState,
+  action: Action
+) => {
+  switch (action.type) {
+    case CREATE_PROJECT:
+      return createProject(state, action.payload);
+    case READ_PROJECT:
+      return readProject(state, action.payload);
+    case UPDATE_PROJECT:
+      return updateProject(state, action.payload);
+    case DELETE_PROJECT:
+      return deleteProject(state, action.payload);
+    case LOAD_PROJECT:
+      return loadProjects(state, action.payload);
+    default:
+      return state;
+  }
+};
 
 const tango = projectsState;
 

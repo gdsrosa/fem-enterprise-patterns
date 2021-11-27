@@ -24,4 +24,9 @@ interface AppState {
   projectsState: ProjectsState;
 }
 
-export { Client, Project, ProjectsState, ClientState, AppState };
+interface Action {
+  type: string;
+  payload?: any;
+}
+
+export { Client, Project, ProjectsState, ClientState, AppState, Action };
